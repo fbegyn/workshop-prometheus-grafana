@@ -27,12 +27,6 @@ services:
   #   ports:
   #     - 9100:9100
 
-  # nginx-exporter: # nginx + nginx-exporter inside
-  #   image: etiennetremel/nginx-prometheus
-  #   ports:
-  #     - 8080:80      # serving website
-  #     - 9101:9101    # metrics
-
   # postgres:
   #   image: postgres:10
   #   ports:

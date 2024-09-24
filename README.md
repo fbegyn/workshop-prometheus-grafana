@@ -205,7 +205,7 @@ Those dashboards are only compatible with Prometheus data-source and node-export
 
 ![](imgs/grafana-community-dash.png)
 
-## 8 - Monitor services: nginx, postgresql...
+## 8 - Monitor services: postgresql...
 
 ### 8.1 Blackbox exporter
 
@@ -240,12 +240,11 @@ Update the prometheus configuration to scrape blackbox exporter target
 
 </details>
 
-### 8.2 - Export Nginx and PostgreSQL metrics
+### 8.2 - Export PostgreSQL metrics
 
-Uncomment `postgres`, `postgresql-exporter` and `nginx-exporter` services in docker-compose.yml, and launch containers.
+Uncomment `postgres`, `postgresql-exporter` services in docker-compose.yml, and launch containers.
 
 ```
-docker-compose up -d nginx-exporter
 docker-compose up -d postgres postgresql-exporter
 ```
 
@@ -263,9 +262,6 @@ scrape_config:
     static_configs:
       - targets: ['postgresql-exporter:9187']
 
-  - job_name: 'nginx-exporter'
-    static_configs:
-      - targets: ['nginx-exporter:9101']
   ```
 
   Then `docker-compose exec prometheus kill -HUP 1`
@@ -300,31 +296,6 @@ Go on [https://grafana.com/dashboards](https://grafana.com/dashboards) and find 
   <summary>💡 Solution</summary>
 
   Those exporters looks nice: [https://grafana.com/dashboards/6742](https://grafana.com/dashboards/6742), [https://grafana.com/dashboards/6995](https://grafana.com/dashboards/6995).
-
-</details>
-
-### 8.5 - Create Nginx dashboards
-
-Display 2 graphs:
-
-- number of 2xx http requests per second
-
-- number of 4xx http requests per second
-
-Tips: you should use `sum by(<label>) (<metric>)` and `irate(<metric>)` (cf PromQL doc).
-
-![](imgs/grafana-nginx-404.png)
-
-<details>
-  <summary>💡 Solution</summary>
-
-  Query graph 1: `sum by (status) (irate(nginx_http_requests_total{status=~"2.."}[1m]))`
-
-  Legend graph 1: `Status: {{ status }}`
-
-  Query graph 2: `sum by (status) (irate(nginx_http_requests_total{status=~"4.."}[1m]))`
-
-  Legend graph 2: `Status: {{ status }}`
 
 </details>
 
