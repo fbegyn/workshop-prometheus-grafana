@@ -219,7 +219,8 @@ Update the prometheus configuration to scrape blackbox exporter target
 
 <details>
   <summary>💡 Solution</summary>
-```yml
+
+  ```yml
 - job_name: 'blackbox'
     metrics_path: /probe
     params:
@@ -235,7 +236,8 @@ Update the prometheus configuration to scrape blackbox exporter target
         target_label: instance
       - target_label: __address__
         replacement: blackbox-exporter:9115  # The
-```
+  ```
+
 </details>
 
 ### 8.2 - Export Nginx and PostgreSQL metrics
