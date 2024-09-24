@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   prometheus:
     image: prom/prometheus
@@ -9,6 +7,13 @@ services:
       - prometheus-data:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
+  # blackbox-exporter:
+  #   image: prom/blackbox-exporter
+  #   ports:
+  #     - 9115:9115
+  #   volumes:
+  #     - ./blackbox.yml:/config
+
   # grafana:
   #   image: grafana/grafana
   #   ports:
@@ -17,10 +22,10 @@ services:
   #     - ./grafana.db:/etc/grafana/grafana.db
   #     - ./grafana.ini:/etc/grafana/grafana.ini
 
-  node-exporter:
-    image: prom/node-exporter
-    ports:
-      - 9100:9100
+  # node-exporter:
+  #   image: prom/node-exporter
+  #   ports:
+  #     - 9100:9100
 
   # nginx-exporter: # nginx + nginx-exporter inside
   #   image: etiennetremel/nginx-prometheus

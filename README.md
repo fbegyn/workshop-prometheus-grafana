@@ -207,7 +207,38 @@ Those dashboards are only compatible with Prometheus data-source and node-export
 
 ## 8 - Monitor services: nginx, postgresql...
 
-### 8.1 - Export Nginx and PostgreSQL metrics
+### 8.1 Blackbox exporter
+
+Uncomment the `blackbox_exporter` segment and launch the container:
+
+```
+docker-compose up -d blackbox-exporter
+```
+
+Update the prometheus configuration to scrape blackbox exporter target
+
+<details>
+  <summary>💡 Solution</summary>
+```yml
+- job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - http://prometheus.io    # Target to probe with http.
+        - https://prometheus.io   # Target to probe with https.
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  # The
+```
+</details>
+
+### 8.2 - Export Nginx and PostgreSQL metrics
 
 Uncomment `postgres`, `postgresql-exporter` and `nginx-exporter` services in docker-compose.yml, and launch containers.
 
@@ -242,7 +273,7 @@ Check everything is working well here: [http://localhost:9090/targets](http://lo
 
 Take a look on `/metrics` routes of exporters: [http://localhost:9187/metrics](http://localhost:9187/metrics) + [http://localhost:9101/metrics](http://localhost:9101/metrics)
 
-### 8.2 - Generate some metrics
+### 8.3 - Generate some metrics
 
 Send tens of requests to Nginx on localhost:8080 (200, 404...) and fill PostgreSQL database:
 
@@ -259,7 +290,7 @@ Send tens of requests to Nginx on localhost:8080 (200, 404...) and fill PostgreS
 ./infinite-pg-insert.sh
 ```
 
-### 8.3 - Import PG dashboards to Grafana
+### 8.4 - Import PG dashboards to Grafana
 
 Go on [https://grafana.com/dashboards](https://grafana.com/dashboards) and find a dashboard for PostgreSQL, compatible with Prometheus and wrouesnel/postgres_exporter.
 
@@ -270,7 +301,7 @@ Go on [https://grafana.com/dashboards](https://grafana.com/dashboards) and find 
 
 </details>
 
-### 8.4 - Create Nginx dashboards
+### 8.5 - Create Nginx dashboards
 
 Display 2 graphs:
 
