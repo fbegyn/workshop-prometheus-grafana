@@ -1,19 +1,7 @@
 
 # Hands on lab : Prometheus and Grafana
 
-Slides [here](https://docs.google.com/presentation/d/1kRVMHKNg-UNoBFn3ttq12WgYvRvu6hCnX5ySr_FDNpg/edit?usp=sharing)
-
 ## 0 - Introduction
-
-### Full setup (with workshop solutions)
-
-- Prometheus: [http://workshop.grep.to:9090](http://workshop.grep.to:9090)
-- Grafana: [http://workshop.grep.to:3000](http://workshop.grep.to:3000) (user: grep / pass: demo)
-- Node-Exporter: [http://workshop.grep.to:9100/metrics](http://workshop.grep.to:9100/metrics)
-- PostgreSQL (2 tables): postgres://workshop:workshop@workshop.grep.to:5432/workshop
-- Postgresql-Exporter: [http://workshop.grep.to:9187/metrics](http://workshop.grep.to:9187/metrics)
-- Nginx: [http://workshop.grep.to:8080](http://workshop.grep.to:8080)
-- Nginx-Exporter: [http://workshop.grep.to:9101/metrics](http://workshop.grep.to:9101/metrics)
 
 ### Locally with Docker
 
