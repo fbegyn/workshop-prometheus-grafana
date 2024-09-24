@@ -5,13 +5,11 @@
 
 ### Locally with Docker
 
-- Prometheus: [http://localhost:8080](http://localhost:8080)
+- Prometheus: [http://localhost:9090](http://localhost:9090)
 - Grafana: [http://localhost:3000](http://localhost:3000) (user: grep / pass: demo)
 - Node-Exporter: [http://localhost:9100/metrics](http://localhost:9100/metrics)
 - PostgreSQL (2 tables): postgres://workshop:workshop@localhost:5432/workshop
 - Postgresql-Exporter: [http://localhost:9187/metrics](http://localhost:9187/metrics)
-- Nginx: [http://localhost:8080](https://localhost:8080)
-- Nginx-Exporter: [http://localhost:9101/metrics](http://localhost:9101/metrics)
 
 ### Locally without Docker
 
@@ -236,7 +234,7 @@ Uncomment `postgres`, `postgresql-exporter` services in docker-compose.yml, and 
 docker-compose up -d postgres postgresql-exporter
 ```
 
-Update Prometheus configuration to scrape Nginx and PostgreSQL exporters.
+Update Prometheus configuration to scrape PostgreSQL exporters.
 
 <details>
   <summary>💡 Solution</summary>
@@ -259,24 +257,7 @@ Check everything is working well here: [http://localhost:9090/targets](http://lo
 
 Take a look on `/metrics` routes of exporters: [http://localhost:9187/metrics](http://localhost:9187/metrics) + [http://localhost:9101/metrics](http://localhost:9101/metrics)
 
-### 8.3 - Generate some metrics
-
-Send tens of requests to Nginx on localhost:8080 (200, 404...) and fill PostgreSQL database:
-
-```sh
-# 2xx
-./infinite-200-req.sh
-
-# 4xx
-./infinite-404-req.sh
-```
-
-```sh
-# inserts data into pg
-./infinite-pg-insert.sh
-```
-
-### 8.4 - Import PG dashboards to Grafana
+### 8.3 - Import PG dashboards to Grafana
 
 Go on [https://grafana.com/dashboards](https://grafana.com/dashboards) and find a dashboard for PostgreSQL, compatible with Prometheus and wrouesnel/postgres_exporter.
 
